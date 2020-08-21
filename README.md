@@ -1,9 +1,13 @@
 # Automated Test Environment for AKS Applications
 
-Framework to create Automated Test Environment using [kind](https://kind.sigs.k8s.io/) for testing Azure Kubernetes Service (AKS) based applications in CI (Continuous Integration) Pipeline (Azure DevOps), where required dependencies/infrastructure will be provisioned for executing automated tests and deprovisioned after completion.
+Framework to create Automated Test Environment using [KIND](https://kind.sigs.k8s.io/) for testing Azure Kubernetes Service (AKS) based applications in CI (Continuous Integration) Pipeline (Azure DevOps), where required dependencies/infrastructure will be provisioned for executing automated tests and de-provisioned after completion.
+
+Testing the applications to be deployed over Kubernetes means either the Cluster is already available or is to be deployed on the go before you test, in former case its a cost to keep the Cluster live and in later it takes a lot of time to bring up the kubernetes cluster.
+
+ This framework uses [KIND](https://kind.sigs.k8s.io/) which itself was primarily designed for testing Kubernetes itself. KIND is often used by developers to test their applications in local dev environments and can very well be used for automated testing.
 
 ## Tools Used
-1. [kind](https://kind.sigs.k8s.io/) - a tool for running local Kubernetes clusters using Docker container “nodes”.
+1. [KIND](https://kind.sigs.k8s.io/) - a tool for running local Kubernetes clusters using Docker container “nodes”
 2. [helm](https://helm.sh/) - the package manager for Kubernetes
 3. [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/) - command line tool to control Kubernetes clusters
 4. [bash](https://www.gnu.org/software/bash/) - the GNU Project's shell
@@ -12,12 +16,12 @@ Framework to create Automated Test Environment using [kind](https://kind.sigs.k8
 
 This is a very simple Framework, that creates Automated Test Environment to enable automated testing of applications hosted in [Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/) with the following features -
 
-1. Create/Delete `kind` cluster in CI environment
+1. Create/Delete `KIND` cluster in CI environment
 2. Optional - [Azure Key Vault Provider for Secrets Store CSI Driver](https://github.com/Azure/secrets-store-csi-driver-provider-azure) [installation](https://github.com/Azure/secrets-store-csi-driver-provider-azure#install-the-secrets-store-csi-driver-and-the-azure-keyvault-provider) and [configuration](https://github.com/Azure/secrets-store-csi-driver-provider-azure/blob/master/docs/service-principal-mode.md)
 3. Optional - [Azure Container Registry (ACR) Image Pull Secret](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-kubernetes#create-an-image-pull-secret)
 4. Install `helm` charts of application (values needed for integration test environment can be overwritten easily)
 5. Validate if the respective Kubernetes `pods` are up and running (multiple `pods` can be provided that are having selector - `app.kubernetes.io/name`)
-6. [Port-Froward](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/#forward-a-local-port-to-a-port-on-the-pod) the respective Kubernetes `services` needed to perform integration testing (multiple `services` can be provided and the respective local ports will be starting from `8080` to `808[number of services]` maintaining the order as provided)
+6. [Port-Forward](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/#forward-a-local-port-to-a-port-on-the-pod) the respective Kubernetes `services` needed to perform integration testing (multiple `services` can be provided and the respective local ports will be starting from `8080` to `808[number of services]` maintaining the order as provided)
 
 ## Getting Started
 
@@ -50,7 +54,7 @@ This framework contains the following script and their options -
 #              --kubectl-check-services-selector-label=<ex. app.kubernetes.io/name or name etc.> (default app.kubernetes.io/name)
 #              --kubectl-port-forward-services=<","(comma) seprated Service names needed to port-forward for testing>
 ```
-3. `stop.sh`: Delete `kind` cluster -
+3. `stop.sh`: Delete `KIND` cluster -
 ```sh
 # Usage: bash -f ./stop.sh
 #        Supported Options -
